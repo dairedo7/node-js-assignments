@@ -60,7 +60,7 @@ router.post("/", async (req, res, next) => {
   try {
     const { error } = contactShema.validate(req.body);
     if (error) {
-      throw createError(400, "missing required field");
+      throw createError(400, "missing required name field");
     }
     const result = await contactsOperations.addContact(req.body);
     res.status(201).json({
@@ -99,7 +99,7 @@ router.put("/:id", async (req, res, next) => {
   try {
     const { error } = shemaUpdate.validate(req.body);
     if (error) {
-      throw createError(400, "missing current fields");
+      throw createError(400, "missing fields");
     }
     const { id } = req.params;
     const result = await contactsOperations.updateContact(id, req.body);
