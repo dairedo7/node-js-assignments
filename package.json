@@ -3,22 +3,24 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./server.js",
-    "start:dev": "cross-env NODE_ENV=development nodemon ./server.js",
+    "start": "cross-env NODE_ENV=production node ./bin/server.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon ./bin/server.js",
     "lint": "eslint **/*.js",
     "lint:fix": "eslint --fix **/*.js"
   },
   "dependencies": {
     "bson-objectid": "^2.0.3",
     "cors": "2.8.5",
+    "dotenv": "^16.0.1",
     "express": "4.17.1",
     "joi": "^17.6.0",
     "moment": "^2.29.4",
+    "mongodb": "^4.9.0",
+    "mongoose": "^6.5.2",
     "morgan": "1.10.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
     "eslint": "7.19.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "16.0.3",

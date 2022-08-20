@@ -1,13 +1,13 @@
 const express = require("express");
+// const { MongoClient } = require("mongodb");
 const logger = require("morgan");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 
 // Connecting contacts list
 const contactsRouter = require("./routes/api/contacts");
-
-app.listen(5000, () => console.log("Success. Web-server is running"));
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -26,7 +26,8 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(500).json({ message: err.message });
+  const { status = 500, message = "Server error" } = err;
+  res.status(status).json({ message });
 });
 
 module.exports = app;
