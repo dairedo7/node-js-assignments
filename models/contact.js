@@ -43,4 +43,4 @@ contactSchema.path("name").validate(function (value) {
 
 const Contact = model("contact", contactSchema);
 
-module.exports = Contact;
+module.exports = { Contact, contactSchema };
