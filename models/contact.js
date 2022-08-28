@@ -1,46 +1,46 @@
 const { Schema, model } = require("mongoose");
+const Joi = require("joi");
 
-const contactSchema = new Schema(
+const contactSchema = Schema(
   {
     name: {
       type: String,
       required: [true, "Set name for contact"],
     },
-
     email: {
       type: String,
-      required: [true, "Set email for contact"],
     },
-
     phone: {
       type: String,
     },
-
     favorite: {
       type: Boolean,
       default: false,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
       required: true,
     },
   },
-  {
-    versionKey: false,
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-      transform: function (doc, ret) {
-        delete ret._id;
-        return ret;
-      },
-    },
-    toObject: { virtuals: true },
-  }
+  { versionKey: false, timestamps: true }
 );
-
-contactSchema.path("name").validate(function (value) {
-  const re = /[A-Z]\w+/;
-  return re.test(String(value));
-});
 
 const Contact = model("contact", contactSchema);
 
-module.exports = { Contact, contactSchema };
+const joiSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().required(),
+  phone: Joi.string().required(),
+  favorite: Joi.boolean().required(),
+});
+
+const favoriteJoiSchema = Joi.object({
+  favorite: Joi.boolean().required(),
+});
+
+module.exports = {
+  Contact,
+  joiSchema,
+  favoriteJoiSchema,
+};

@@ -1,24 +1,19 @@
-const { Contact } = require("../../models/");
-const { createError } = require("../../helpers");
+const { Contact } = require("../../models");
+const { STATUS_CODES } = require("../../middlewares");
+
+const { OK } = STATUS_CODES;
 
 const getById = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const result = await Contact.findById(id);
+  const { contactId } = req.params;
+  const result = await Contact.findById(contactId);
 
-    if (!result) {
-      throw createError(404);
-    }
-    res.json({
-      status: "success",
-      code: 200,
-      data: {
-        result,
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.json({
+    status: "success",
+    code: OK,
+    data: {
+      result,
+    },
+  });
 };
 
 module.exports = getById;

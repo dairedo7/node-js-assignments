@@ -1,22 +1,27 @@
-const { Contact } = require("../../models/");
-const { bookUpdateFavoriteSchema } = require("../../models/validation");
-const { createError } = require("../../helpers");
+const { Contact } = require("../../models");
+const { STATUS_CODES } = require("../../middlewares");
+
+const { OK } = STATUS_CODES;
 
 const updateFavorite = async (req, res, next) => {
-  try {
-    const { error } = bookUpdateFavoriteSchema.validate(req.body);
-    if (error) {
-      throw createError(400, error.message);
+  const { contactId } = req.params;
+  const { favorite } = req.body;
+
+  const result = await Contact.findByIdAndUpdate(
+    contactId,
+    { favorite },
+    {
+      new: true,
     }
-    const { id } = req.params;
-    const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
-    if (!result) {
-      throw createError(404);
-    }
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
+  );
+
+  res.json({
+    status: "success",
+    code: OK,
+    data: {
+      result,
+    },
+  });
 };
 
 module.exports = updateFavorite;

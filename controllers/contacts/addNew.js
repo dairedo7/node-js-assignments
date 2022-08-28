@@ -1,25 +1,21 @@
-const { Contact } = require("../../models/");
+const { Contact } = require("../../models");
+const { STATUS_CODES } = require("../../middlewares");
 
-const { contactShema } = require("../../models/validation");
-const { createError } = require("../../helpers");
+const { CREATED } = STATUS_CODES;
 
 const addNew = async (req, res, next) => {
-  try {
-    const { error } = contactShema.validate(req.body);
-    if (error) {
-      throw createError(400, "missing required name field");
-    }
-    const result = await Contact.create(req.body);
-    res.status(201).json({
+  const { _id } = req.user;
+
+  const result = await Contact.create({ ...req.body, owner: _id });
+
+  if (result)
+    res.status(CREATED).json({
       status: "success",
-      code: 201,
+      code: CREATED,
       data: {
         result,
       },
     });
-  } catch (error) {
-    next(error);
-  }
 };
 
 module.exports = addNew;
