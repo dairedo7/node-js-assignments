@@ -1,29 +1,22 @@
-const { Contact } = require("../../models/");
-const { schemaUpdate } = require("../../models/validation");
-const { createError } = require("../../helpers");
+const { Contact } = require("../../models");
+const { STATUS_CODES } = require("../../middlewares");
+
+const { OK } = STATUS_CODES;
+
 const putById = async (req, res, next) => {
-  try {
-    const { error } = schemaUpdate.validate(req.body);
-    if (error) {
-      throw createError(400, "missing fields");
-    }
-    const { id } = req.params;
+  const { contactId } = req.params;
 
-    const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  });
 
-    if (!result) {
-      throw createError(404, "Not found");
-    }
-    res.status(200).json({
-      status: "success",
-      code: 200,
-      data: {
-        result,
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.json({
+    status: "success",
+    code: OK,
+    data: {
+      result,
+    },
+  });
 };
 
 module.exports = putById;
