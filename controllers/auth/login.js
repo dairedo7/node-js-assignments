@@ -7,8 +7,6 @@ require("dotenv").config();
 const { OK } = STATUS_CODES;
 const { SECRET_KEY } = process.env;
 
-// const SECRET_KEY = "Specific_Key_567"
-
 const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });

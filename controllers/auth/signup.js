@@ -1,6 +1,7 @@
 const { User } = require("../../models");
 const { Conflict } = require("http-errors");
 const { STATUS_CODES } = require("../../middlewares");
+const gravatar = require("gravatar");
 
 const { CREATED } = STATUS_CODES;
 
@@ -11,7 +12,9 @@ const signup = async (req, res) => {
     throw new Conflict(`Email ${email} is in use`);
   }
 
-  const newUser = new User({ subscription, email });
+  const avatarURL = gravatar.url(email);
+  const newUser = new User({ subscription, email, avatarURL });
+
   newUser.setPassword(password);
   newUser.save();
 
@@ -22,6 +25,7 @@ const signup = async (req, res) => {
       user: {
         email,
         subscription,
+        avatarURL,
       },
     },
   });
