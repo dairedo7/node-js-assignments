@@ -14,4 +14,6 @@ router.post(
 router.post("/login", validationPost(joiLoginSchema), ctrlWrapper(ctrl.login));
 router.get("/logout", auth, ctrlWrapper(ctrl.logout));
 
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+
 module.exports = router;

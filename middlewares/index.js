@@ -1,4 +1,8 @@
-const { validationPost, validationUpdate } = require("./validation");
+const {
+  validationPost,
+  validationUpdate,
+  validationVerify,
+} = require("./validation");
 const validateId = require("./validationId");
 const ctrlWrapper = require("./ctrlWrapper");
 const auth = require("./auth");
@@ -10,6 +14,7 @@ module.exports = {
   validateId,
   validationPost,
   validationUpdate,
+  validationVerify,
   ctrlWrapper,
   auth,
   STATUS_CODES,
