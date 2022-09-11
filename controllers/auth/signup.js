@@ -2,7 +2,7 @@ const { User } = require("../../models");
 const { Conflict } = require("http-errors");
 const { STATUS_CODES } = require("../../middlewares");
 const gravatar = require("gravatar");
-const { uuid } = require("uuid");
+const { v4: uuid } = require("uuid");
 
 const { CREATED } = STATUS_CODES;
 

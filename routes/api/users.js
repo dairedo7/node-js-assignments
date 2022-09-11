@@ -29,7 +29,7 @@ router.patch(
 );
 
 router.post(
-  "./verify",
+  "/verify",
   validationVerify(verifyEmailSchema),
   ctrlWrapper(ctrl.resendVerificationEmail)
 );

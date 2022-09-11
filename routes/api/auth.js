@@ -11,6 +11,7 @@ router.post(
   validationPost(joiSignupSchema),
   ctrlWrapper(ctrl.signup)
 );
+
 router.post("/login", validationPost(joiLoginSchema), ctrlWrapper(ctrl.login));
 router.get("/logout", auth, ctrlWrapper(ctrl.logout));
 
