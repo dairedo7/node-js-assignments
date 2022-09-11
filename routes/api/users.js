@@ -7,11 +7,13 @@ const {
   upload,
   ctrlWrapper,
   validationUpdate,
+  validationVerify,
 } = require("../../middlewares");
-const { subscriptionJoiSchema } = require("../../models");
+const { subscriptionJoiSchema, verifyEmailSchema } = require("../../models");
 const router = express.Router();
 
 router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
+
 router.patch(
   "/subscription",
   auth,
@@ -24,6 +26,12 @@ router.patch(
   auth,
   upload.single("avatar"),
   ctrlWrapper(ctrl.updateAvatar)
+);
+
+router.post(
+  "/verify",
+  validationVerify(verifyEmailSchema),
+  ctrlWrapper(ctrl.resendVerificationEmail)
 );
 
 module.exports = router;
