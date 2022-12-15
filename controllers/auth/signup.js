@@ -1,12 +1,12 @@
-const { User } = require("../../models");
-const { Conflict } = require("http-errors");
-const { STATUS_CODES } = require("../../middlewares");
-const gravatar = require("gravatar");
-const { v4: uuid } = require("uuid");
+const { User } = require('../../models');
+const { Conflict } = require('http-errors');
+const { STATUS_CODES } = require('../../middlewares');
+const gravatar = require('gravatar');
+const { v4: uuid } = require('uuid');
 
 const { CREATED } = STATUS_CODES;
 
-const { sendEmail, emailOutline } = require("../../helpers");
+const { sendEmail, emailOutline } = require('../../helpers');
 
 const signup = async (req, res) => {
   const { email, password, subscription } = req.body;
@@ -30,7 +30,7 @@ const signup = async (req, res) => {
   newUser.save();
 
   res.status(CREATED).json({
-    status: "success",
+    status: 'success',
     code: CREATED,
     data: {
       user: {
